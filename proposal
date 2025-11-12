@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Proposal | Founding AI & Data Science Leader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!-- Chosen Palette: "Stone & Emerald" -->
+    <!-- Application Structure Plan: Designed as an interactive proposal dashboard. A sticky nav links to key sections: 1. Strategic Fit (interactive cards), 2. Q&A (tabbed interface for clarity), 3. Project 1 Plan (visual timeline), 4. Timeline & Cost (interactive donut chart & summary). This non-linear structure allows the client (CMO) to quickly evaluate the applicant's core value props and dive into specific answers, which is more user-friendly than a static document. -->
+    <!-- Visualization & Content Choices: 1. Strategic Fit (Table) -> Goal: Compare -> Viz: 2x2 Grid of Cards -> Interaction: Layout -> Justification: More engaging than a static table. 2. Q&A (Text) -> Goal: Organize -> Viz: Tabbed Interface -> Interaction: Click to toggle panes -> Justification: Condenses 3 large answers into one clean component. 3. RAG Plan (Table) -> Goal: Change (Show process) -> Viz: Horizontal Flexbox Timeline -> Interaction: None (visual) -> Justification: Visualizes the 10-day process flow more effectively than a table. 4. Compensation (Table) -> Goal: Inform/Compare -> Viz: Donut Chart + Stat Cards + List -> Interaction: Chart hover -> Justification: Breaks down the $11,500 total, with the chart showing cost proportion per phase. | Library: Chart.js for Donut. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            border-color: #059669;
+            background-color: #059669;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .tab-btn:not(.active):hover {
+            background-color: #f3f4f6;
+        }
+        .timeline-step {
+            border-left-width: 4px;
+        }
+        @media (min-width: 768px) {
+            .timeline-step {
+                border-left-width: 0;
+                border-top-width: 4px;
+                padding-top: 1.5rem;
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 shadow-md backdrop-blur-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <span class="text-xl font-bold text-emerald-700">Proposal Dashboard</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="text-stone-600 hover:text-emerald-700 px-3 py-2 rounded-md text-sm font-medium">Overview</a>
+                        <a href="#strategy" class="text-stone-600 hover:text-emerald-700 px-3 py-2 rounded-md text-sm font-medium">Strategic Fit</a>
+                        <a href="#qa" class="text-stone-600 hover:text-emerald-700 px-3 py-2 rounded-md text-sm font-medium">Q&A</a>
+                        <a href="#plan" class="text-stone-600 hover:text-emerald-700 px-3 py-2 rounded-md text-sm font-medium">Project 1: RAG Plan</a>
+                        <a href="#timeline" class="text-stone-600 hover:text-emerald-700 px-3 py-2 rounded-md text-sm font-medium">Timeline & Cost</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- Section: Overview -->
+        <section id="overview" class="py-16">
+            <h1 class="text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">Comprehensive Proposal: Founding AI & Data Science Leader</h1>
+            <p class="mt-6 text-xl text-stone-700">This interactive dashboard outlines the proposal for a senior strategic partnership focused on building a durable, competitive advantage through data science. Explore the key value propositions, project plans, and financial breakdown below.</p>
+            
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-semibold text-emerald-700">Role</h3>
+                    <p class="text-2xl font-bold text-stone-900">Founding AI Lead</p>
+                    <p class="text-stone-600">Senior Strategic Partner</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-semibold text-emerald-700">Availability</h3>
+                    <p class="text-2xl font-bold text-stone-900">Immediate</p>
+                    <p class="text-stone-600">40 hrs/week, 8am–5pm CST</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-semibold text-emerald-700">Introductory Rate</h3>
+                    <p class="text-2xl font-bold text-stone-900">$25 USD / hour</p>
+                    <p class="text-stone-600">To establish a long-term partnership</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Strategic Fit -->
+        <section id="strategy" class="py-16">
+            <h2 class="text-3xl font-bold text-stone-900">Core Responsibilities & Strategic Alignment</h2>
+            <p class="mt-4 text-lg text-stone-700">My work will be measured by dollars saved and generated, not by abstract model metrics. Here is how I align with your core objectives:</p>
+            
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-emerald-700">1. Business Strategy & Market Expansion</h3>
+                    <p class="mt-3 text-stone-600"><span class="font-semibold text-stone-800">My Focus:</span> Developing spatial-temporal models to rank potential acquisition targets and high-value zip codes based on localized CPA, LTV, and market saturation.</p>
+                    <p class="mt-3 text-stone-600"><span class="font-semibold text-stone-800">Value:</span> Direct, data-backed guidance for the deployment of tens of millions in M&A capital.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-emerald-700">2. Marketing & Customer Analytics</h3>
+                    <p class="mt-3 text-stone-600"><span class="font-semibold text-stone-800">My Focus:</span> Building predictive models to define the "DNA" of a High-Value Customer (HVC) for each trade, enabling proactive channel optimization and reducing wasteful spend.</p>
+                    <p class="mt-3 text-stone-600"><span class="font-semibold text-stone-800">Value:</span> Maximizing ROI on marketing budget and improving customer lifetime value (CLV).</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-emerald-700">3. Operational & Financial Analysis</h3>
+                    <p class="mt-3 text-stone-600"><span class="font-semibold text-stone-800">My Focus:</span> Partnering with Finance/Operations to build automated models that analyze job data and profit margins, surfacing bottlenecks (e.g., inefficient scheduling) for immediate action.</p>
+                    <p class="mt-3 text-stone-600"><span class="font-semibold text-stone-800">Value:</span> Increasing overall operating margin and efficiency across all 900+ units.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-emerald-700">4. Hands-On AI Development</h3>
+                    <p class="mt-3 text-stone-600"><span class="font-semibold text-stone-800">My Focus:</span> Designing the infrastructure using Python, SQL, and robust cloud APIs (Azure/GCP/OpenAI) with a strong bias toward scalable "buying" solutions over costly custom "building."</p>
+                    <p class="mt-3 text-stone-600"><span class="font-semibold text-stone-800">Value:</span> Rapid deployment of secure, maintainable, and cost-effective AI tools.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Q&A -->
+        <section id="qa" class="py-16">
+            <h2 class="text-3xl font-bold text-stone-900">Responses to Application Questions</h2>
+            <p class="mt-4 text-lg text-stone-700">Explore my detailed responses to your specific questions regarding past projects, technical approaches, and strategic philosophy.</p>
+            
+            <div class="mt-10">
+                <!-- Tab Headers -->
+                <div class="border-b border-stone-300">
+                    <nav class="-mb-px flex space-x-4" aria-label="Tabs">
+                        <button id="tab-btn-1" class="tab-btn active whitespace-nowrap py-3 px-5 border-b-4 text-stone-600" aria-current="page">Q1: Past Project & Outcome</button>
+                        <button id="tab-btn-2" class="tab-btn whitespace-nowrap py-3 px-5 border-b-4 text-stone-600">Q2: Approach to RAG Project</button>
+                        <button id="tab-btn-3" class="tab-btn whitespace-nowrap py-3 px-5 border-b-4 text-stone-600">Q3: "Buy vs. Build" Philosophy</button>
+                    </nav>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="mt-8">
+                    <!-- Q1 Content -->
+                    <div id="tab-content-1" class="tab-content space-y-4">
+                        <h3 class="text-2xl font-semibold text-stone-800">Q1: Describe a project where you used data science to directly influence a major business or financial decision.</h3>
+                        <p class="text-stone-700">In my last senior role with a Private Equity (PE)-backed e-commerce aggregator, I was tasked with leading the strategic modeling for our market expansion and acquisition strategy.</p>
+                        <ul class="list-disc list-outside ml-5 space-y-2 text-stone-700">
+                            <li><span class="font-semibold text-stone-800">The Decision:</span> The company was planning to spend $15 million acquiring three new regional competitors over 18 months.</li>
+                            <li><span class="font-semibold text-stone-800">My Role:</span> I built a comprehensive spatial-temporal model that aggregated local demographics, competitor concentration, and granular Cost-Per-Acquisition (CPA) data. My model projected that entering two of the three pre-selected regions would be suboptimal due to rapidly rising ad costs, leading to a projected 30% lower Internal Rate of Return (IRR).</li>
+                            <li><span class="font-semibold text-stone-800">The Outcome:</span> The executive team leveraged this data, halting the planned acquisitions in the low-IRR markets. Capital was instead redeployed to double down on the single, highest-IRR market. This move ultimately resulted in a 40% increase in projected first-year EBITDA from the acquisition capital.</li>
+                        </ul>
+                    </div>
+                    <!-- Q2 Content -->
+                    <div id="tab-content-2" class="tab-content space-y-4 hidden">
+                        <h3 class="text-2xl font-semibold text-stone-800">Q2: Please review this recent proposal for a project... and briefly tell me, how would you approach building and deploying this system from scratch?</h3>
+                        <p class="text-stone-700">I have reviewed the attached project proposal (mining 24,000 Facebook posts). The proposed RAG approach is sound; however, my approach focuses on maximum speed and low-complexity deployment to deliver executive insights immediately.</p>
+                        <p class="text-stone-700">The objective is actionable answers, not a large research deployment. I would simplify the initial deployment to ensure the Marketing leadership team has a functional, queryable system in hand within 10 business days.</p>
+                        <a href="#plan" class="inline-block mt-4 bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-emerald-700 transition-colors">See the Full 10-Day Deployment Plan</a>
+                    </div>
+                    <!-- Q3 Content -->
+                    <div id="tab-content-3" class="tab-content space-y-4 hidden">
+                        <h3 class="text-2xl font-semibold text-stone-800">Q3: What is your philosophy on "building vs. buying" when it comes to AI models and infrastructure?</h3>
+                        <p class="text-stone-700">My philosophy is rooted in maximizing competitive advantage while minimizing operational overhead: <span class="font-bold">We should BUY commodity services, and BUILD proprietary competitive advantage.</span></button>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                            <div class="border-l-4 border-emerald-600 pl-4">
+                                <h4 class="text-xl font-semibold text-stone-800">Buy/Leverage (90% of Time)</h4>
+                                <p class="text-stone-700">For commodity, general intelligence tasks (summarization, general Q&A, classification), we should leverage robust, managed APIs (OpenAI, Anthropic, Google). This ensures SOTA performance and minimizes MLOps debt.</p>
+                            </div>
+                            <div class="border-l-4 border-emerald-600 pl-4">
+                                <h4 class="text-xl font-semibold text-stone-800">Build (10% of Time)</h4>
+                                <p class="text-stone-700">We only build custom models when the task is unique, proprietary, and directly generates revenue or informs a multi-million dollar decision. (e.g., The strategic M&A Model, the custom HVC predictive model).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Project 1 Plan -->
+        <section id="plan" class="py-16 bg-white rounded-lg shadow-lg">
+            <div class="px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-stone-900">Project 1: Actionable RAG in 10 Days</h2>
+                <p class="mt-4 text-lg text-stone-700">This is my proposed 3-phase plan for your first project: mining 24,000 Facebook posts. The focus is on delivering a fully queryable MVP for executive use, fast.</p>
+                
+                <div class="mt-10 flex flex-col md:flex-row justify-between space-y-8 md:space-y-0 md:space-x-8">
+                    <!-- Step 1 -->
+                    <div class="flex-1">
+                        <div class="timeline-step border-emerald-600 pl-4 md:pl-0 md:pt-4">
+                            <span class="text-sm font-semibold text-emerald-700">PHASE 1 (2 DAYS)</span>
+                            <h3 class="text-xl font-semibold text-stone-800 mt-1">Data Prep & Embeddings</h3>
+                            <p class="mt-2 text-stone-600"><span class="font-semibold">Goal:</span> Clean data, structure metadata (author, date, group), and generate vector embeddings.</p>
+                            <p class="mt-2 text-stone-600"><span class="font-semibold">Stack:</span> Python (Pandas) with high-performance embedding models (e.g., OpenAI or Anthropic).</p>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="flex-1">
+                        <div class="timeline-step border-emerald-600 pl-4 md:pl-0 md:pt-4">
+                            <span class="text-sm font-semibold text-emerald-700">PHASE 2 (3 DAYS)</span>
+                            <h3 class="text-xl font-semibold text-stone-800 mt-1">Vector DB & Query UI</h3>
+                            <p class="mt-2 text-stone-600"><span class="font-semibold">Goal:</span> Deploy the vector store and build a secure, browser-based UI for rapid executive testing.</p>
+                            <p class="mt-2 text-stone-600"><span class="font-semibold">Stack:</span> Postgres w/ `pgvector` (to leverage SQL expertise), UI with Streamlit/Dash.</p>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="flex-1">
+                        <div class="timeline-step border-emerald-600 pl-4 md:pl-0 md:pt-4">
+                            <span class="text-sm font-semibold text-emerald-700">PHASE 3 (5 DAYS)</span>
+                            <h3 class="text-xl font-semibold text-stone-800 mt-1">Deployment & Iteration</h3>
+                            <p class="mt-2 text-stone-600"><span class="font-semibold">Goal:</span> Deploy to a secure cloud environment (Azure/GCP) and perform initial validation with the Marketing team.</p>
+                            <p class="mt-2 text-stone-600"><span class="font-semibold">Stack:</span> Docker, Azure/GCP Compute, OpenAI/Anthropic API (GPT-4o) for generation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Timeline & Compensation -->
+        <section id="timeline" class="py-16">
+            <h2 class="text-3xl font-bold text-stone-900">Preliminary Timeline & Compensation</h2>
+            <p class="mt-4 text-lg text-stone-700">This is a full-time senior leadership position. The $25/hr rate is offered to establish a strong, long-term partnership and demonstrate value.</p>
+            
+            <div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Column: Chart & Totals -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-semibold text-stone-800 text-center">Initial 11.5 Week Scope</h3>
+                    <div class="flex justify-around mt-6 text-center">
+                        <div>
+                            <span class="text-lg font-semibold text-emerald-700">Total Duration</span>
+                            <p class="text-3xl font-bold text-stone-900">11.5 Weeks</p>
+                        </div>
+                        <div>
+                            <span class="text-lg font-semibold text-emerald-700">Total Cost</span>
+                            <p class="text-3xl font-bold text-stone-900">$11,500</p>
+                        </div>
+                    </div>
+                    <div class="chart-container mt-6">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Right Column: Phase Breakdown -->
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-xl font-semibold text-stone-800">Phase 1: Onboarding & Setup</h3>
+                            <span class="text-lg font-semibold text-emerald-700">$1,500</span>
+                        </div>
+                        <p class="text-stone-600">Project 1 (RAG) initiation, environment access, and deep dive with CMO/Finance. (1.5 Weeks / 60 hours)</p>
+                    </div>
+                    <hr>
+                    <div>
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-xl font-semibold text-stone-800">Phase 2: Marketing & Customer Analytics</h3>
+                            <span class="text-lg font-semibold text-emerald-700">$4,000</span>
+                        </div>
+                        <p class="text-stone-600">Project 1 delivery (RAG), plus building the initial predictive High-Value Customer (HVC) segmentation model. (4 Weeks / 160 hours)</p>
+                    </div>
+                    <hr>
+                    <div>
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-xl font-semibold text-stone-800">Phase 3: Strategy & Ops Focus</h3>
+                            <span class="text-lg font-semibold text-emerald-700">$6,000</span>
+                        </div>
+                        <p class="text-stone-600">M&A/Market Expansion Model prototype (Q1 deliverable), plus identifying 2 key operational bottlenecks for AI intervention. (6 Weeks / 240 hours)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-800 text-stone-300">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Interactive Proposal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tab-switching logic
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.id.replace('tab-btn-', 'tab-content-');
+
+                    // Update button active state
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-current', 'false');
+                    });
+                    button.classList.add('active');
+                    button.setAttribute('aria-current', 'page');
+
+                    // Update content visibility
+                    tabContents.forEach(content => {
+                        if (content.id === tabId) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Chart.js logic
+            const ctx = document.getElementById('costChart');
+            if (ctx) {
+                new Chart(ctx.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: [
+                            'Onboarding & Setup ($1,500)',
+                            'Marketing & Customer Analytics ($4,000)',
+                            'Strategy & Ops Focus ($6,000)'
+                        ],
+                        datasets: [{
+                            label: 'Cost Breakdown',
+                            data: [1500, 4000, 6000],
+                            backgroundColor: [
+                                '#34d399', // emerald-400
+                                '#059669', // emerald-600
+                                '#047857'  // emerald-700
+                            ],
+                            borderColor: '#ffffff',
+                            borderWidth: 3,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#44403c', // stone-700
+                                    font: {
+                                        family: 'Inter',
+                                        size: 12
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed !== null) {
+                                            label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
